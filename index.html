@@ -1,0 +1,104 @@
+<!DOCTYPE html>
+<html>
+<head>
+  <title>Juego del Ahorcado</title>
+  <style>
+    body {
+      text-align: center;
+      font-family: Arial, sans-serif;
+    }
+
+    #word-container {
+      font-size: 24px;
+      margin-bottom: 20px;
+    }
+
+    #hangman-image {
+      margin-bottom: 20px;
+    }
+
+    #letters-container {
+      margin-top: 20px;
+    }
+
+    .letter-box {
+      display: inline-block;
+      margin: 5px;
+      width: 30px;
+      height: 30px;
+      text-align: center;
+      border: 1px solid #000;
+      cursor: pointer;
+    }
+
+    .letter-box:hover {
+      background-color: #EEE;
+    }
+  </style>
+</head>
+<body>
+  <h1>Juego del Ahorcado</h1>
+  <div id="word-container"></div>
+  <img id="hangman-image" src="hangman_0.png" alt="Ahorcado">
+  <div id="letters-container"></div>
+
+  <script>
+    var words = ["gato", "perro", "elefante", "jirafa", "mono", "tigre"];
+    var currentWord = "";
+    var guessedLetters = [];
+    var remainingAttempts = 6;
+
+    function startGame() {
+      // Reiniciar variables
+      currentWord = words[Math.floor(Math.random() * words.length)];
+      guessedLetters = [];
+      remainingAttempts = 6;
+
+      // Crear los contenedores de letras y palabra
+      var wordContainer = document.getElementById("word-container");
+      var lettersContainer = document.getElementById("letters-container");
+      wordContainer.innerHTML = "";
+      lettersContainer.innerHTML = "";
+
+      // Crear los espacios para cada letra de la palabra
+      for (var i = 0; i < currentWord.length; i++) {
+        var letterSpace = document.createElement("span");
+        letterSpace.innerHTML = "_";
+        wordContainer.appendChild(letterSpace);
+      }
+
+      // Crear las casillas de letras disponibles
+      for (var letter = 65; letter <= 90; letter++) {
+        var letterBox = document.createElement("div");
+        letterBox.className = "letter-box";
+        letterBox.innerHTML = String.fromCharCode(letter);
+        letterBox.onclick = selectLetter;
+        lettersContainer.appendChild(letterBox);
+      }
+    }
+
+    function selectLetter(event) {
+      var selectedLetter = event.target.innerHTML;
+      event.target.onclick = null; // Deshabilitar el clic en la letra seleccionada
+
+      if (currentWord.indexOf(selectedLetter) === -1) {
+        remainingAttempts--;
+        updateHangmanImage();
+      } else {
+        for (var i = 0; i < currentWord.length; i++) {
+          if (currentWord[i] === selectedLetter) {
+            guessedLetters[i] = selectedLetter;
+          }
+        }
+        updateWordContainer();
+      }
+
+      if (remainingAttempts === 0) {
+        endGame("¡Perdiste! La palabra era: " + currentWord);
+      } else if (guessedLetters.indexOf(undefined) === -1) {
+        endGame("¡Felicitaciones! Adivinaste la palabra: " + currentWord);
+      }
+    }
+
+    function updateWordContainer() {
+      var word
