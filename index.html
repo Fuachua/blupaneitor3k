@@ -1,100 +1,111 @@
 <!DOCTYPE html>
-<html>
+<html lang="es">
 <head>
-  <title>AAAAAAAAA</title>
+  <meta charset="UTF-8">
+  <title>Tienda en línea</title>
   <style>
+    /* Estilos CSS para la página */
     body {
+      font-family: Arial, sans-serif;
+      margin: 0;
+      padding: 0;
+    }
+    
+    header {
+      background-color: #333;
+      color: #fff;
+      padding: 20px;
+      text-align: center;
+    }
+    
+    h1 {
+      margin: 0;
+    }
+    
+    main {
+      padding: 20px;
+    }
+    
+    .producto {
+      display: flex;
+      align-items: center;
+      margin-bottom: 20px;
+      border: 1px solid #ccc;
+      border-radius: 4px;
+      padding: 10px;
+    }
+    
+    .producto img {
+      max-width: 200px;
+      margin-right: 20px;
+    }
+    
+    .producto h2 {
+      margin: 0;
+    }
+    
+    .precio {
+      font-weight: bold;
+      margin-bottom: 10px;
+    }
+    
+    .descripcion {
+      margin-bottom: 10px;
+    }
+    
+    .boton {
+      background-color: #333;
+      color: #fff;
+      border: none;
+      padding: 10px 20px;
+      border-radius: 4px;
+      cursor: pointer;
+    }
+    
+    footer {
+      background-color: #333;
+      color: #fff;
+      padding: 20px;
+      text-align: center;
+    }
+    
+    footer p {
       margin: 0;
     }
   </style>
 </head>
 <body>
- <h1>
-  <script src="https://cdn.jsdelivr.net/npm/phaser@3.60.1/dist/phaser.min.js"></script>
-  <script>
-    // Configuración del juego
-    var config = {
-      type: Phaser.AUTO,
-      width: 800,
-      height: 600,
-      scene: {
-        preload: preload,
-        create: create,
-        update: update
-      }
-    };
-
-    // Inicialización del juego
-    var game = new Phaser.Game(config);
-
-    // Variables del juego
-    var player;
-    var platforms;
-    var cursors;
-
-    // Precarga de recursos
-    function preload() {
-      this.load.image('sky', 'assets/sky.png');
-      this.load.image('ground', 'assets/platform.png');
-      this.load.spritesheet('player', 'assets/player.png', { frameWidth: 32, frameHeight: 48 });
-    }
-
-    // Creación de elementos del juego
-    function create() {
-      this.add.image(400, 300, 'sky');
-
-      platforms = this.physics.add.staticGroup();
-      platforms.create(400, 568, 'ground').setScale(2).refreshBody();
-      platforms.create(600, 400, 'ground');
-      platforms.create(50, 250, 'ground');
-      platforms.create(750, 220, 'ground');
-
-      player = this.physics.add.sprite(100, 450, 'player');
-      player.setBounce(0.2);
-      player.setCollideWorldBounds(true);
-      this.anims.create({
-        key: 'left',
-        frames: this.anims.generateFrameNumbers('player', { start: 0, end: 3 }),
-        frameRate: 10,
-        repeat: -1
-      });
-      this.anims.create({
-        key: 'turn',
-        frames: [{ key: 'player', frame: 4 }],
-        frameRate: 20
-      });
-      this.anims.create({
-        key: 'right',
-        frames: this.anims.generateFrameNumbers('player', { start: 5, end: 8 }),
-        frameRate: 10,
-        repeat: -1
-      });
-
-      this.physics.add.collider(player, platforms);
-
-      cursors = this.input.keyboard.createCursorKeys();
-    }
-
-    // Actualización del juego
-    function update() {
-      if (cursors.left.isDown) {
-        player.setVelocityX(-160);
-        player.anims.play('left', true);
-      }
-      else if (cursors.right.isDown) {
-        player.setVelocityX(160);
-        player.anims.play('right', true);
-      }
-      else {
-        player.setVelocityX(0);
-        player.anims.play('turn');
-      }
-
-      if (cursors.up.isDown && player.body.touching.down) {
-        player.setVelocityY(-330);
-      }
-    }
-  </script>
-    <h1>
+  <header>
+    <h1>Tienda en línea</h1>
+  </header>
+  
+  <main>
+    <div class="producto">
+      <img src="imagen1.jpg" alt="Producto 1">
+      <div>
+        <h2>Producto 1</h2>
+        <p class="precio">Precio: $20</p>
+        <p class="descripcion">Descripción del producto.</p>
+        <button class="boton">Agregar al carrito</button>
+      </div>
+    </div>
+    
+    <div class="producto">
+      <img src="imagen2.jpg" alt="Producto 2">
+      <div>
+        <h2>Producto 2</h2>
+        <p class="precio">Precio: $30</p>
+        <p class="descripcion">Descripción del producto.</p>
+        <button class="boton">Agregar al carrito</button>
+      </div>
+    </div>
+    
+    <!-- Agrega más productos aquí -->
+    
+  </main>
+  
+  <footer>
+    <p>Derechos de autor &copy; 2023 Tienda en línea. Todos los derechos reservados.</p>
+  </footer>
 </body>
 </html>
